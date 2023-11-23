@@ -29,7 +29,7 @@ def main():
     seed_everything(args.seed)
 
     # Load Stable Diffusion model
-    model = MergeAttendStableDiffusion(device, args.dtype)
+    model = MergeAttendStableDiffusion(args.model_key, device, args.dtype)
     save_dir = Path(args.save_dir)
     save_dir.mkdir(exist_ok=True, parents=True)
     out_file = Path(args.out_name).stem
