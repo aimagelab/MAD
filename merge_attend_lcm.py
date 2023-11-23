@@ -23,7 +23,7 @@ class MergeAttendLCM(nn.Module):
         # Load pretrained models from HuggingFace
         self.vae = AutoencoderKL.from_pretrained(model_key, subfolder="vae").to(self.device, self.dtype)
         self.tokenizer = CLIPTokenizer.from_pretrained(model_key, subfolder="tokenizer")
-        self.text_encoder = CLIPTextModel.from_pretrained(model_key, subfolder="text_encoder").to(self.device, self.dtype)
+        self.text_enc = CLIPTextModel.from_pretrained(model_key, subfolder="text_encoder").to(self.device, self.dtype)
         self.unet = UNet2DConditionModel.from_pretrained(model_key, subfolder="unet").to(self.device, self.dtype)
         self.scheduler = LCMScheduler.from_pretrained(model_key, subfolder="scheduler")
 
@@ -32,19 +32,19 @@ class MergeAttendLCM(nn.Module):
             p.requires_grad_(False)
         for p in self.vae.parameters():
             p.requires_grad_(False)
-        for p in self.text_encoder.parameters():
+        for p in self.text_enc.parameters():
             p.requires_grad_(False)
 
         self.unet.eval()
         self.vae.eval()
-        self.text_encoder.eval()
+        self.text_enc.eval()
         print(f"Loaded LCM!")
 
     def get_text_embeds(self, prompt):
         # Tokenize text and get embeddings
         text_input = self.tokenizer(prompt, padding='max_length', max_length=self.tokenizer.model_max_length,
                                     truncation=True, return_tensors='pt')
-        text_embeddings = self.text_encoder(text_input.input_ids.to(self.device))[0]
+        text_embeddings = self.text_enc(text_input.input_ids.to(self.device))[0]
         return text_embeddings
 
     def decode_latents(self, latents):
@@ -125,7 +125,7 @@ class MergeAttendLCM(nn.Module):
         views = get_views(height, width, window_size=latent_size, stride=stride)
 
         # Initialize latent
-        latent = torch.randn((1, self.unet.config.in_channels, height // 8,  width // 8), dtype=self.dtype)
+        latent = torch.randn((1, self.unet.config.in_channels, height // 8, width // 8), dtype=self.dtype)
 
         processor = CrossViewsAttnProcessor2_0(
             batch_size=1,
@@ -134,7 +134,6 @@ class MergeAttendLCM(nn.Module):
             latent_w=width // 8,
             stride=stride,
             is_cons=True)
-
 
         self.unet.set_attn_processor(processor)
         self.set_attn_processor_mad(processor, mad_blocks)
@@ -165,7 +164,8 @@ class MergeAttendLCM(nn.Module):
                     batched_latent_views.append(latent_view)
 
                 latent_model_input = torch.cat(batched_latent_views)
-                noise_pred = self.unet(latent_model_input, t, timestep_cond=w_embedding, encoder_hidden_states=text_embeds)['sample']
+                out = self.unet(latent_model_input, t, timestep_cond=w_embedding, encoder_hidden_states=text_embeds)
+                noise_pred = out['sample']
 
                 for view_idx, (h_start, h_end, w_start, w_end) in enumerate(views):
                     value_latent[:, :, h_start:h_end, w_start:w_end] += noise_pred[view_idx]

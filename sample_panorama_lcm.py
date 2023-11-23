@@ -6,19 +6,19 @@ import torch
 from merge_attend_lcm import MergeAttendLCM
 from sampling_utils import seed_everything
 
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--prompt', type=str, default='A photo of a city skyline at night')
-    parser.add_argument('--negative', type=str, default='')
     parser.add_argument('--model_key', type=str, default='SimianLuo/LCM_Dreamshaper_v7')
     parser.add_argument('--H', type=int, default=512)
     parser.add_argument('--W', type=int, default=3072)
     parser.add_argument('--steps', type=int, default=4)
-    parser.add_argument('--num_samples', type=int, default=500)
+    parser.add_argument('--num_samples', type=int, default=3)
     parser.add_argument('--save_dir', type=str, default='results')
     parser.add_argument('--out_name', type=str, default='out')
     parser.add_argument('--dtype', type=str, default='fp32')
-    parser.add_argument('--mad_threshold', type=int, default=1)
+    parser.add_argument('--mad_threshold', type=int, default=2)
     parser.add_argument('--mad_blocks', type=str, default='all')
     parser.add_argument('--stride', type=int, default=16, help='window stride for MultiDiffusion')
     parser.add_argument('--seed', type=int, default=2023)

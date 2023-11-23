@@ -20,6 +20,9 @@ python sample_panorama_stable_diffusion.py
 
 ## Inference with LCM
 Basic code to run inference with the default parameters
-```python
+```
 python sample_panorama_lcm.py
 ```
+
+## Acknowledgements
+Our code is heavily based on the [implementation](https://github.com/omerbt/MultiDiffusion) of [MultiDiffusion](https://multidiffusion.github.io/)

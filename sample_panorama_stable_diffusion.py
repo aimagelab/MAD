@@ -6,6 +6,7 @@ import torch
 from merge_attend_stable_diffusion import MergeAttendStableDiffusion
 from sampling_utils import seed_everything
 
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--prompt', type=str, default='A photo of a city skyline at night')
@@ -14,7 +15,7 @@ def main():
     parser.add_argument('--H', type=int, default=512)
     parser.add_argument('--W', type=int, default=3072)
     parser.add_argument('--steps', type=int, default=50)
-    parser.add_argument('--num_samples', type=int, default=500)
+    parser.add_argument('--num_samples', type=int, default=3)
     parser.add_argument('--save_dir', type=str, default='results')
     parser.add_argument('--out_name', type=str, default='out')
     parser.add_argument('--dtype', type=str, default='fp32')

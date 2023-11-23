@@ -21,7 +21,7 @@ class MergeAttendStableDiffusion(nn.Module):
         # Load pretrained models from HuggingFace
         self.vae = AutoencoderKL.from_pretrained(model_key, subfolder="vae").to(self.device, self.dtype)
         self.tokenizer = CLIPTokenizer.from_pretrained(model_key, subfolder="tokenizer")
-        self.text_encoder = CLIPTextModel.from_pretrained(model_key, subfolder="text_encoder").to(self.device, self.dtype)
+        self.text_enc = CLIPTextModel.from_pretrained(model_key, subfolder="text_encoder").to(self.device, self.dtype)
         self.unet = UNet2DConditionModel.from_pretrained(model_key, subfolder="unet").to(self.device, self.dtype)
 
         # Freeze models
@@ -29,12 +29,12 @@ class MergeAttendStableDiffusion(nn.Module):
             p.requires_grad_(False)
         for p in self.vae.parameters():
             p.requires_grad_(False)
-        for p in self.text_encoder.parameters():
+        for p in self.text_enc.parameters():
             p.requires_grad_(False)
 
         self.unet.eval()
         self.vae.eval()
-        self.text_encoder.eval()
+        self.text_enc.eval()
 
         # Set scheduler
         self.scheduler = DDIMScheduler.from_pretrained(model_key, subfolder="scheduler")
@@ -44,12 +44,12 @@ class MergeAttendStableDiffusion(nn.Module):
         # Tokenize text and get embeddings
         text_input = self.tokenizer(prompt, padding='max_length', max_length=self.tokenizer.model_max_length,
                                     truncation=True, return_tensors='pt')
-        text_embeddings = self.text_encoder(text_input.input_ids.to(self.device))[0]
+        text_embeddings = self.text_enc(text_input.input_ids.to(self.device))[0]
 
         # Repeat for unconditional embeddings
         uncond_input = self.tokenizer(negative_prompt, padding='max_length', max_length=self.tokenizer.model_max_length,
                                       return_tensors='pt')
-        uncond_embeddings = self.text_encoder(uncond_input.input_ids.to(self.device))[0]
+        uncond_embeddings = self.text_enc(uncond_input.input_ids.to(self.device))[0]
 
         # Concatenate for final embeddings
         text_embeddings = torch.cat([uncond_embeddings, text_embeddings])
