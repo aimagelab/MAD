@@ -24,7 +24,7 @@ python sample_panorama_stable_diffusion.py --prompt "A shelf full of colorful bo
 
 python sample_panorama_stable_diffusion.py --prompt "Tube map of London"
 
-python sample_panorama_stable_diffusion.py --prompt "Top-view of a long banana bread"
+python sample_panorama_stable_diffusion.py --prompt "A whole shepherd pie"
 ```
 
 ## Inference with LCM
