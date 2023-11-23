@@ -18,10 +18,33 @@ Basic code to run inference with the default parameters
 python sample_panorama_stable_diffusion.py
 ```
 
+Some suggestions:
+```
+python sample_panorama_stable_diffusion.py --prompt "A shelf full of colorful books"
+
+python sample_panorama_stable_diffusion.py --prompt "Tube map of London"
+
+python sample_panorama_stable_diffusion.py --prompt "Top-view of a long banana bread"
+```
+
 ## Inference with LCM
 Basic code to run inference with the default parameters
 ```
 python sample_panorama_lcm.py
+```
+
+Some suggestions:
+```
+python sample_panorama_lcm.py --prompt "A pride concert full of colorful fireworks"
+
+python sample_panorama_lcm.py --prompt "Top-view of a square pizza"
+```
+
+Some suggestions of vertical images:
+```
+python sample_panorama_lcm.py --prompt "A tower in a colorful sky" --W 512 --H 2048
+
+python sample_panorama_lcm.py --prompt "A view of a river inside a canyon" --W 512 --H 2048
 ```
 
 ## Acknowledgements
