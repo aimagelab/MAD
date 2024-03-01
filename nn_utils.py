@@ -1,6 +1,7 @@
 import torch
 import torch.nn.functional as F
 import math
+from einops import rearrange
 
 
 class CrossViewsAttnProcessor2_0:
@@ -33,9 +34,9 @@ class CrossViewsAttnProcessor2_0:
 
     def merge_all_batched_qkv_views_into_canvas(self, batch_q, batch_k, batch_v):
         views_len, spatial_size, down_factor, latent_h, latent_w, inner_dim = self.compute_current_sizes(batch_q)
-        batch_q_views = batch_q.reshape(self.bs, views_len, spatial_size, spatial_size, -1).permute(0, 1, 4, 2, 3)
-        batch_k_views = batch_k.reshape(self.bs, views_len, spatial_size, spatial_size, -1).permute(0, 1, 4, 2, 3)
-        batch_v_views = batch_v.reshape(self.bs, views_len, spatial_size, spatial_size, -1).permute(0, 1, 4, 2, 3)
+        batch_q_views = rearrange(batch_q, '(b v) (h w) d -> b v d h w', v=views_len, h=spatial_size)
+        batch_k_views = rearrange(batch_k, '(b v) (h w) d -> b v d h w', v=views_len, h=spatial_size)
+        batch_v_views = rearrange(batch_v, '(b v) (h w) d -> b v d h w', v=views_len, h=spatial_size)
         canvas_q = torch.zeros((self.bs, inner_dim, latent_h, latent_w), device=self.device, dtype=self.dtype)
         canvas_k = torch.zeros((self.bs, inner_dim, latent_h, latent_w), device=self.device, dtype=self.dtype)
         canvas_v = torch.zeros((self.bs, inner_dim, latent_h, latent_w), device=self.device, dtype=self.dtype)
@@ -54,7 +55,7 @@ class CrossViewsAttnProcessor2_0:
 
     def merge_batched_q_views_into_canvas(self, batch):
         views_len, spatial_size, down_factor, latent_h, latent_w, inner_dim = self.compute_current_sizes(batch)
-        batch_views = batch.reshape(self.bs, views_len, spatial_size, spatial_size, -1).permute(0, 1, 4, 2, 3)
+        batch_views = rearrange(batch, '(b v) (h w) d -> b v d h w', v=views_len, h=spatial_size)
         canvas = torch.zeros((self.bs, inner_dim, latent_h, latent_w), device=self.device, dtype=self.dtype)
         count = torch.zeros((self.bs, inner_dim, latent_h, latent_w), device=self.device, dtype=self.dtype)
         for view_idx, (h_start, h_end, w_start, w_end) in enumerate(self.views):
@@ -72,8 +73,7 @@ class CrossViewsAttnProcessor2_0:
             w_start, w_end = w_start // down_factor, w_end // down_factor
             canvas_views.append(canvas[:, :, h_start:h_end, w_start:w_end, :])
         canvas = torch.cat(canvas_views, dim=1)
-        batch_size, views_len, height, width, inner_dim = canvas.size()
-        canvas = canvas.reshape(batch_size * views_len, height * width, inner_dim)
+        canvas = rearrange(canvas, 'b v h w d -> (b v) (h w) d')
         return canvas
 
     def __call__(self, attn, hidden_states, encoder_hidden_states=None, attention_mask=None):
@@ -103,21 +103,21 @@ class CrossViewsAttnProcessor2_0:
         if not is_cross_attention:
             if self.apply_mad:
                 query, key, value, down_factor = self.merge_all_batched_qkv_views_into_canvas(query, key, value)
-                query = query.reshape(self.bs, attn.heads, head_dim, -1).permute(0, 1, 3, 2).contiguous()
-                key = key.reshape(self.bs, attn.heads, head_dim, -1).permute(0, 1, 3, 2).contiguous()
-                value = value.reshape(self.bs, attn.heads, head_dim, -1).permute(0, 1, 3, 2).contiguous()
+                query = rearrange(query, 'b (nh hd) h w -> b nh (h w) hd', nh=attn.heads, hd=head_dim).contiguous()
+                key = rearrange(key, 'b (nh hd) h w -> b nh (h w) hd', nh=attn.heads, hd=head_dim).contiguous()
+                value = rearrange(value, 'b (nh hd) h w -> b nh (h w) hd', nh=attn.heads, hd=head_dim).contiguous()
             else:
-                query = query.view(bs, -1, attn.heads, head_dim).transpose(1, 2)
-                key = key.view(bs, -1, attn.heads, head_dim).transpose(1, 2)
-                value = value.view(bs, -1, attn.heads, head_dim).transpose(1, 2)
+                query = rearrange(query, 'b hw (nh nd) -> b nh hw nd', nh=attn.heads, nd=head_dim)
+                key = rearrange(key, 'b hw (nh nd) -> b nh hw nd', nh=attn.heads, nd=head_dim)
+                value = rearrange(value, 'b hw (nh nd) -> b nh hw nd', nh=attn.heads, nd=head_dim)
         else:
             query, down_factor = self.merge_batched_q_views_into_canvas(query)
-            query = query.reshape(self.bs, attn.heads, head_dim, -1).permute(0, 1, 3, 2).contiguous()
+            query = rearrange(query, 'b (nh hd) h w -> b nh (h w) hd', nh=attn.heads, hd=head_dim)
             # LCMs do not allow negative prompts
             key = torch.cat([key[None, 0], key[None, -1]], dim=0) if not self.is_cons else key[None, 0]
-            key = key.view(self.bs, -1, attn.heads, head_dim).transpose(1, 2)
+            key = rearrange(key, 'b p (nh nd) -> b nh p nd', nh=attn.heads, nd=head_dim)
             value = torch.cat([value[None, 0], value[None, -1]], dim=0) if not self.is_cons else value[None, 0]
-            value = value.view(self.bs, -1, attn.heads, head_dim).transpose(1, 2)
+            value = rearrange(value, 'b p (nh nd) -> b nh p nd', nh=attn.heads, nd=head_dim)
 
         # the output of sdp = (batch, num_heads, seq_len, head_dim)
         hidden_states = F.scaled_dot_product_attention(
@@ -125,12 +125,11 @@ class CrossViewsAttnProcessor2_0:
         )
 
         if not is_cross_attention and not self.apply_mad:
-            hidden_states = hidden_states.transpose(1, 2).reshape(bs, -1, attn.heads * head_dim)
+            hidden_states = rearrange(hidden_states, 'b nh hw nd -> b hw (nh nd)')
         else:
             hidden_states = hidden_states.transpose(1, 2)
             latent_h = self.latent_h // down_factor
-            latent_w = self.latent_w // down_factor
-            hidden_states = hidden_states.reshape(self.bs, 1, latent_h, latent_w, attn.heads * head_dim)
+            hidden_states = rearrange(hidden_states, 'b (h w) nh hd -> b 1 h w (nh hd)', h=latent_h)
             hidden_states = self.split_canvas_into_views(hidden_states, down_factor)
 
         hidden_states = hidden_states.to(query.dtype)

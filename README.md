@@ -8,7 +8,7 @@ This is the list of python packages that we need to run inference
 ```console
 conda create --name mad python=3.11
 conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
-pip install diffusers["torch"] transformers
+pip install diffusers["torch"] transformers einops
 ```
 
 
