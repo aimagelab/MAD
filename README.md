@@ -6,9 +6,8 @@ The code is tested on Python 3.11.5, CUDA 12.1, and PyTorch 2.1.1
 ## Installation
 This is the list of python packages that we need to run inference 
 ```console
-conda create --name mad python=3.11
-conda install pytorch torchvision torchaudio pytorch-cuda=12.1 -c pytorch -c nvidia
-pip install diffusers["torch"] transformers einops
+conda create --name mad python=3.11.7
+pip install -r requirements.txt
 ```
 
 

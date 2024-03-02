@@ -9,7 +9,7 @@ from sampling_utils import seed_everything
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--prompt', type=str, default='A pride concert at night')
+    parser.add_argument('--prompt', type=str, default='Northern Lights at the North Pole')
     parser.add_argument('--negative', type=str, default='')
     parser.add_argument('--model_key', type=str, default='stabilityai/stable-diffusion-2-base')
     parser.add_argument('--H', type=int, default=512)
