@@ -1,7 +1,17 @@
 # MAD: Semantically Coherent Montages by Merging and Splitting Diffusion Paths
-Official PyTorch implementation for "Semantically Coherent Montages by Merging and Splitting Diffusion Paths", presenting the Merge-Attend-Diffuse operator
+Official PyTorch implementation for "Merging and Splitting Diffusion Paths for Semantically Coherent Panoramas", presenting the Merge-Attend-Diffuse operator.
 
 The code is tested on Python 3.11.7, CUDA 12.1, and PyTorch 2.1.2
+
+If you find it useful, please cite it as:
+```
+@inproceedings{quattrini2024merging,
+  title={{Merging and Splitting Diffusion Paths for Semantically Coherent Panoramas}},
+  author={Quattrini, Fabio and Pippi, Vittorio and Cascianelli, Silvia and Cucchiara, Rita},
+  booktitle=eccv,
+  year={2024},
+}
+```
 
 ## Installation
 This is the list of python packages that we need to run inference 
