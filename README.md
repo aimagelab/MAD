@@ -8,7 +8,7 @@ If you find it useful, please cite it as:
 @inproceedings{quattrini2024merging,
   title={{Merging and Splitting Diffusion Paths for Semantically Coherent Panoramas}},
   author={Quattrini, Fabio and Pippi, Vittorio and Cascianelli, Silvia and Cucchiara, Rita},
-  booktitle=eccv,
+  booktitle={Proceedings of the European Conference on Computer Vision},
   year={2024},
 }
 ```
