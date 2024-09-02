@@ -10,6 +10,7 @@ If you find it useful, please cite it as:
   author={Quattrini, Fabio and Pippi, Vittorio and Cascianelli, Silvia and Cucchiara, Rita},
   booktitle={Proceedings of the European Conference on Computer Vision},
   year={2024},
+  organization={Springer}
 }
 ```
 
