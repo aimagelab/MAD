@@ -1,8 +1,8 @@
 # MAD: Merging and Splitting Diffusion Paths for Semantically Coherent Panoramas
 
-[![ECCV Paper](https://img.shields.io/badge/ECCV%20Paper-green?style=flat&logo=readthedocs&logoColor=white)](https://link.springer.com/chapter/10.1007/978-3-031-72986-7_14)
-[![arXiv](https://img.shields.io/badge/arXiv-2408.15660-B31B1B?style=flat&logo=arxiv&logoColor=white)](https://arxiv.org/pdf/2408.15660.pdf)
-[![ECCV Poster](https://img.shields.io/badge/ECCV%20Poster-%F0%9F%93%84-007ACC?style=flat)](./imgs/MAD_poster.pdf)
+[![ECCV Paper](https://img.shields.io/badge/ECCV-Paper-green.svg)](https://link.springer.com/chapter/10.1007/978-3-031-72986-7_14)
+[![arXiv](https://img.shields.io/badge/arXiv-2408.15660-b31b1b.svg))](https://arxiv.org/pdf/2408.15660.pdf)
+[![ECCV Poster](https://img.shields.io/badge/🖼️-Poster-blue.svg)](./imgs/MAD_poster.pdf)
 ![Pytorch](https://img.shields.io/badge/PyTorch->=2.1.2-Red?logo=pytorch)
 
 https://github.com/aimagelab/MAD
