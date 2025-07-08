@@ -9,7 +9,7 @@
 Official PyTorch implementation for "Merging and Splitting Diffusion Paths for Semantically Coherent Panoramas", presenting the Merge-Attend-Diffuse operator.
 
 <p align="center">
-  <img src="imgs/MAD_method.png" alt="Overview of the proposed inference-time pipeline (left) and its pseudo-code (right)" style="width: 60%;">
+  <img src="imgs/MAD_method.png" alt="Overview of the proposed inference-time pipeline (left) and its pseudo-code (right)" style="width: 100%;">
 </p>
 <p align="center">
   Overview of the proposed inference-time pipeline (left) and its pseudo-code (right)
