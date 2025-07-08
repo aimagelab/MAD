@@ -6,16 +6,7 @@
 ![Pytorch](https://img.shields.io/badge/PyTorch->=2.1.2-Red?logo=pytorch)
 
 ## Introduction
-Official PyTorch implementation for "Merging and Splitting Diffusion Paths for Semantically Coherent Panoramas", presenting the Merge-Attend-Diffuse operator.
-
-<p align="center">
-  <img src="imgs/MAD_method.png" alt="Overview of the proposed inference-time pipeline (left) and its pseudo-code (right)" style="width: 100%;">
-</p>
-<p align="center">
-  Overview of the proposed inference-time pipeline (left) and its pseudo-code (right)
-</p>
-
-The code is tested on Python 3.11.7, CUDA 12.1, and PyTorch 2.1.2
+Official PyTorch implementation for "Merging and Splitting Diffusion Paths for Semantically Coherent Panoramas", presenting the Merge-Attend-Diffuse operator. The code is tested on Python 3.11.7, CUDA 12.1, and PyTorch 2.1.2
 
 If you find it useful, please cite it as:
 ```
@@ -27,6 +18,13 @@ If you find it useful, please cite it as:
   organization={Springer}
 }
 ```
+
+<p align="center">
+  <img src="imgs/MAD_method.png" alt="Overview of the proposed inference-time pipeline (left) and its pseudo-code (right)" style="width: 100%;">
+</p>
+<p align="center">
+  Overview of the proposed inference-time pipeline (left) and its pseudo-code (right)
+</p>
 
 ## Installation
 This is the list of python packages that we need to run inference 
