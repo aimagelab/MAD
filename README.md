@@ -1,4 +1,10 @@
-# MAD: Semantically Coherent Montages by Merging and Splitting Diffusion Paths
+# MAD: Merging and Splitting Diffusion Paths for Semantically Coherent Panoramas
+[![ECCV Paper](ECCV-Paper-green.svg)](https://link.springer.com/chapter/10.1007/978-3-031-72986-7_14)
+[![arXiv](arXiv-2408.15660-b31b1b)](https://arxiv.org/pdf/2408.15660.pdf)
+[![Poster](🖼️-Poster-blue)](./imgs/MAD_poster.pdf)
+![Pytorch](https://img.shields.io/badge/PyTorch->=2.1.2-Red?logo=pytorch)
+
+https://github.com/aimagelab/MAD
 Official PyTorch implementation for "Merging and Splitting Diffusion Paths for Semantically Coherent Panoramas", presenting the Merge-Attend-Diffuse operator.
 
 The code is tested on Python 3.11.7, CUDA 12.1, and PyTorch 2.1.2
@@ -26,6 +32,22 @@ pip install -r requirements.txt
 Basic code to run inference with the default parameters
 ```
 python sample_panorama_stable_diffusion.py
+```
+
+Some suggestions:
+```
+python sample_panorama_stable_diffusion.py --prompt "A shelf full of colorful books"
+
+python sample_panorama_stable_diffusion.py --prompt "Tube map of London"
+
+python sample_panorama_stable_diffusion.py --prompt "A whole shepherd pie"
+```
+
+
+## Inference with Stable Diffusion XL
+Basic code to run inference with the default parameters
+```
+python sample_panorama_stable_diffusion_xl.py
 ```
 
 Some suggestions:

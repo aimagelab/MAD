@@ -1,6 +1,5 @@
 from pathlib import Path
 import argparse
-import numpy as np
 import torch
 
 from merge_attend_stable_diffusion import MergeAttendStableDiffusion
