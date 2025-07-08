@@ -12,7 +12,7 @@ def main():
     parser.add_argument('--negative', type=str, default='')
     parser.add_argument('--model_key', type=str, default='stabilityai/stable-diffusion-xl-base-1.0')
     parser.add_argument('--H', type=int, default=1024)
-    parser.add_argument('--W', type=int, default=2048)
+    parser.add_argument('--W', type=int, default=4096)
     parser.add_argument('--steps', type=int, default=50)
     parser.add_argument('--num_samples', type=int, default=3)
     parser.add_argument('--save_dir', type=str, default='results')
