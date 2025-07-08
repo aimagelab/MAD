@@ -6,7 +6,9 @@
 ![Pytorch](https://img.shields.io/badge/PyTorch->=2.1.2-Red?logo=pytorch)
 
 ## Introduction
-Official PyTorch implementation for "Merging and Splitting Diffusion Paths for Semantically Coherent Panoramas", presenting the Merge-Attend-Diffuse operator. The code is tested on Python 3.11.7, CUDA 12.1, and PyTorch 2.1.2
+Official PyTorch implementation for "Merging and Splitting Diffusion Paths for Semantically Coherent Panoramas", presenting the Merge-Attend-Diffuse operator. 
+
+The code is tested on Python 3.11.7, CUDA 12.1, and PyTorch 2.1.2
 
 If you find it useful, please cite it as:
 ```
@@ -23,11 +25,11 @@ If you find it useful, please cite it as:
   <img src="imgs/MAD_method.png" alt="Overview of the proposed inference-time pipeline (left) and its pseudo-code (right)" style="width: 100%;">
 </p>
 <p align="center">
-  Overview of the proposed inference-time pipeline (left) and its pseudo-code (right)
+  Overview of the proposed inference-time pipeline (left) and its pseudo-code (right).
 </p>
 
 ## Installation
-This is the list of python packages that we need to run inference 
+This is the list of python packages that we need to run inference:
 ```console
 conda create --name mad python=3.11.7
 pip install -r requirements.txt
@@ -35,7 +37,9 @@ pip install -r requirements.txt
 
 
 ## Inference with Stable Diffusion
-Basic code to run inference with the default parameters
+
+### Panorama Generation
+Basic code to run inference with the default parameters:
 ```
 python sample_panorama_stable_diffusion.py
 ```
@@ -49,15 +53,21 @@ python sample_panorama_stable_diffusion.py --prompt "Tube map of London"
 python sample_panorama_stable_diffusion.py --prompt "A whole shepherd pie"
 ```
 
+### Region-Based Generation
+Example code to run inference with the default parameters:
+```
+python sample_panorama_stable_diffusion_region_based.py
+```
+
 
 ## Inference with Stable Diffusion XL
-Basic code to run inference with the default parameters
+Basic code to run inference with the default parameters:
 ```
 python sample_panorama_stable_diffusion_xl.py
 ```
 
 ## Inference with LCM
-Basic code to run inference with the default parameters
+Basic code to run inference with the default parameters:
 ```
 python sample_panorama_lcm.py
 ```

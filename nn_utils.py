@@ -23,6 +23,9 @@ class CrossViewsAttnProcessor2_0:
         self.is_cons = is_cons
         self.latent_size = latent_size
 
+        # Used only for region-based generation
+        self.current_region_mask = None
+
     def compute_current_sizes(self, batch):
         bs, sequence_length, inner_dim = batch.shape
         views_len = bs // self.bs

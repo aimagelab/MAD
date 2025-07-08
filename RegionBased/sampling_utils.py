@@ -6,14 +6,13 @@ from PIL import Image
 def seed_everything(seed):
     torch.manual_seed(seed)
     torch.cuda.manual_seed(seed)
-    torch.cuda.manual_seed_all(seed)
-    torch.backends.cudnn.deterministic = True
-    torch.backends.cudnn.benchmark = False
+    # torch.backends.cudnn.deterministic = True
+    # torch.backends.cudnn.benchmark = True
 
 
-def get_views(panorama_height, panorama_width, window_size=64, stride=8, unet_downsample_factor=8):
-    panorama_height /= unet_downsample_factor
-    panorama_width /= unet_downsample_factor
+def get_views(panorama_height, panorama_width, window_size=64, stride=8):
+    panorama_height /= 8
+    panorama_width /= 8
     num_blocks_height = (panorama_height - window_size) // stride + 1
     num_blocks_width = (panorama_width - window_size) // stride + 1
     total_num_blocks = int(num_blocks_height * num_blocks_width)
