@@ -1,9 +1,11 @@
 # MAD: Merging and Splitting Diffusion Paths for Semantically Coherent Panoramas
 
-[![ECCV Paper](https://img.shields.io/badge/ECCV-Paper-green.svg)](https://link.springer.com/chapter/10.1007/978-3-031-72986-7_14)
-[![arXiv](https://img.shields.io/badge/arXiv-2408.15660-b31b1b.svg))](https://arxiv.org/pdf/2408.15660.pdf)
+<p align="center">
+[![ECCV Paper](https://img.shields.io/badge/ECCV-Paper-blue.svg)](https://link.springer.com/chapter/10.1007/978-3-031-72986-7_14)
+[![arXiv](https://img.shields.io/badge/arXiv-2408.15660-b31b1b.svg)](https://arxiv.org/pdf/2408.15660.pdf)
 [![ECCV Poster](https://img.shields.io/badge/🖼️-Poster-blue.svg)](./imgs/MAD_poster.pdf)
 ![Pytorch](https://img.shields.io/badge/PyTorch->=2.1.2-Red?logo=pytorch)
+</p>
 
 https://github.com/aimagelab/MAD
 Official PyTorch implementation for "Merging and Splitting Diffusion Paths for Semantically Coherent Panoramas", presenting the Merge-Attend-Diffuse operator.
@@ -49,15 +51,6 @@ python sample_panorama_stable_diffusion.py --prompt "A whole shepherd pie"
 Basic code to run inference with the default parameters
 ```
 python sample_panorama_stable_diffusion_xl.py
-```
-
-Some suggestions:
-```
-python sample_panorama_stable_diffusion.py --prompt "A shelf full of colorful books"
-
-python sample_panorama_stable_diffusion.py --prompt "Tube map of London"
-
-python sample_panorama_stable_diffusion.py --prompt "A whole shepherd pie"
 ```
 
 ## Inference with LCM
