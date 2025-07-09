@@ -2,7 +2,7 @@
 
 [![ECCV Paper](https://img.shields.io/badge/ECCV-Paper-blue.svg)](https://link.springer.com/chapter/10.1007/978-3-031-72986-7_14)
 [![arXiv](https://img.shields.io/badge/arXiv-2408.15660-b31b1b.svg)](https://arxiv.org/pdf/2408.15660.pdf)
-[![ECCV Poster](https://img.shields.io/badge/🖼️-Poster-blue.svg)](./imgs/MAD_poster.pdf)
+[![ECCV Poster](https://img.shields.io/badge/🖼️-Poster-blue.svg)](https://fabioquattrini.com/posters/MAD.pdf)
 ![Pytorch](https://img.shields.io/badge/PyTorch->=2.1.2-Red?logo=pytorch)
 
 ## Introduction
